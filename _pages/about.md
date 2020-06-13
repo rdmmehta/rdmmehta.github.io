@@ -3,7 +3,7 @@ layout: page
 title: Ridhim Mehta x Just another Curious Traveller 
 permalink: /about
 comments: false
-image: images/me.jpg
+image: images/avatar.jpg
 imageshadow: true
 ---
 

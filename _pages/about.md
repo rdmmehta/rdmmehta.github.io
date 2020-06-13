@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Memoirs, a free minimalist Jekyll blogging theme with modern design 
+title: Ridhim Mehta x Just another Curious Traveller 
 permalink: /about
 comments: false
-image: assets/images/screenshot.jpg
+image: assets/images/ridhim.jpg
 imageshadow: true
 ---
 
-<img src="https://farm5.staticflickr.com/4640/24300013627_af7882ef2c_b.jpg" width="791" height="527" title="Ridhim Mehta" />
+
 
 Hello, I'm Ridhim Mehta, an amateur photographer, blogger and sometimes I like reading books. Here I share my travel journey and and some random photos.
  

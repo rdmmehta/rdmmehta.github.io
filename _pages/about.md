@@ -3,7 +3,7 @@ layout: page
 title: Ridhim Mehta x Just another Curious Traveller 
 permalink: /about
 comments: false
-image: assets/images/ridhim.jpg
+image: images/me.jpg
 imageshadow: true
 ---
 
@@ -25,5 +25,8 @@ Nikon Nikkor 50mm f/1.8
 
 <u>Connect to me:</u>
 
-<p><a href="http://fb.com/rdmmehta13" title="facebook"><i class="fa fa-facebook" style="color:#000; padding:5 5 5 5; height:50px; width:50px;"></i></a> <a href="http://twitter.com/rdmmehta" title="twitter"><i class="fa fa-twitter" style="color:#000; padding:5 5 5 5; height:50px; width:50px;"></i></a> <a href="http://instagram.com/rdmmehta" title="instagram"><i class="fa fa-instagram" style="color:#000; padding:5 5 5 5; height:50px; width:50px;"></i></a> <a href="http://pinterest/rdmmehta" title="pinterest"><i class="fa fa-pinterest" style="color:#000; padding:5 5 5 5; height:50px; width:50px;"></i></a></p>
+<p><a href="http://fb.com/rdmmehta13" title="facebook">Facebook</a> 
+<a href="http://twitter.com/rdmmehta" title="twitter">Twitter</a> 
+<a href="http://instagram.com/rdmmehta" title="instagram">Instagram</a>
+<a href="http://pinterest/rdmmehta" title="pinterest">Pinterest</a></p>
 

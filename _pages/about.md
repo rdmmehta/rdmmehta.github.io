@@ -28,8 +28,8 @@ Nikon Nikkor 50mm f/1.8
 
 <u>Connect to me:</u>
 
-<p><a href="http://fb.com/rdmmehta13" title="facebook">Facebook</a> 
-<a href="http://twitter.com/rdmmehta" title="twitter">Twitter</a> 
-<a href="http://instagram.com/rdmmehta" title="instagram">Instagram</a>
+<p><a href="http://fb.com/rdmmehta13" title="facebook">Facebook</a> | 
+<a href="http://twitter.com/rdmmehta" title="twitter">Twitter</a> | 
+<a href="http://instagram.com/rdmmehta" title="instagram">Instagram</a> | 
 <a href="http://pinterest/rdmmehta" title="pinterest">Pinterest</a></p>
 

@@ -9,10 +9,13 @@ excerpt_separator: <!--more-->
 image: images/2017/pangong.jpg
 author: Ridhim
 ---
+
 Hello guys, in previous post I shared my experience of travelling to Leh.
 In this posts I've shared the places I visited in Leh.
-This is post is more of photos, enjoy.
+
 <!--more-->
+
+This is post is more of photos, enjoy.
 
 <img src="https://farm5.staticflickr.com/4597/38222019215_5e412da6af_b.jpg" width="1024" height="683" alt="DSC_0236-01">
 Shanti Stupa

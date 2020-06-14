@@ -9,7 +9,9 @@ excerpt_separator: <!--more-->
 image: images/goa.jpg
 author: Ridhim
 ---
+
 Hello guys, back in january I went to goa along with my friends. Yes it finally happened after so many years of planning and it really was worth it.
+
 <!--more-->
 
 Before I start this post I would like you tell you that Goa is pretty much different from rest of the places that I've been to. The culture there is so much different that sometimes I felt like its not even in India.

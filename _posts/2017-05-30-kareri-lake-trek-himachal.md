@@ -40,23 +40,26 @@ We reached the top at 5pm after taking many photos, videos and having Maggie's a
 On the top you'll find a lake surrounded by mountains and you'll see why it is worth 13km trek. 
 
 <img src="https://c1.staticflickr.com/5/4219/34510203964_fe9c6c4379_z.jpg" width="640" height="238" alt="Kareri Lake">
+
 Kareri Lake
 
 So as we reached there our guide suggested setting our tent first. When we were about to set our then were stopped by a storm. So we setup our tent near then temple(storm lasted for 2-3hours). We enjoyed there for some time had our meal followed by a lot of conversations, met some people from around the globe and finally went to sleep in our tent. 
 
 <img src="https://c1.staticflickr.com/5/4201/34510199244_9422993bfa_z.jpg" width="640" height="409" alt="Kareri Shiva Temple">
+
 We setup our tent in this temple area.
 
 
 The next morning it was a beautiful bright sunny day and again we took some photos and after our breakfast started our journey back. We started at 11am and it took us 5hours to get to the bottom. 
-The trek so beautiful that you'll have the desire to visit here again. 
+The trek is so beautiful that you'll have the desire to visit here again. 
 <img src="https://c1.staticflickr.com/5/4274/35313461156_efb11a12aa_z.jpg" width="640" height="427" alt="Kareri Lake">
+
 This shop was destroyed by storm on the day before our visit.
 
 <img src="https://c1.staticflickr.com/5/4263/34510206604_405b63fd87_z.jpg" width="640" height="427" alt="Kareri Trek">
 Headed back
 
-So after reaching down we took our car and headed home with may beautiful memories of this lovely location. 
+So after reaching down we took our car and headed home with many beautiful memories of this lovely location. 
 
 Expenses:
 

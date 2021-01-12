@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Suliali - The Waterfall and Shiva
+title: Suliali - Shiva and His Waterfall
 date: 2018-02-12
 permalink: suliali-shiva-temple/
 description: Suliali shiva temple.

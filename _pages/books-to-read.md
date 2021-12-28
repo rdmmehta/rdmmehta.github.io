@@ -10,7 +10,7 @@ imageshadow: true
 
 
 Hello, 
-Below is the list of books that I'll be reading on 2022:
+Below is the list of books that I'll be reading in 2022, I've also mentioned the dates when I'll be finishing them.
 
 * Man's Search For Meaning - Viktor E. Frankl - 10th Jan, 2022
 * 

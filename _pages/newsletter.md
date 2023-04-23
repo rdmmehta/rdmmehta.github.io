@@ -3,7 +3,7 @@ layout: page
 title: Ridhim Mehta x Newsletter 
 permalink: /newsletter
 comments: false
-image: images/avatar.jpg
+image: 
 imageshadow: true
 ---
 

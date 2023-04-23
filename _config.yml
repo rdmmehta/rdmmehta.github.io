@@ -3,11 +3,11 @@ name: "Ridhim Mehta"
 title: "Ridhim Mehta"
 description: "Ridhim Mehta | Travel . Explore . Discover"
 logo: 'assets/images/logo.png'
-favicon: 'assets/images/logo.png'
+favicon: 'assets/images/ridhim-mehta.png'
 baseurl: /
 google_analytics: 'UA-xxxxxxxx-1'
 disqus: ''
-mailchimp-list: 'https://ridh.us10.list-manage.com/subscribe/post?u=651597af18b7f25d64715d630&amp;id=f8ff3217a1'
+mailchimp-list: 'https://ridh.im/newsletter'
 include: ["_pages"]
 permalink: /:title/
 email: rdm.mehta13@gmail.com

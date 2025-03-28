@@ -3,7 +3,7 @@ layout: page
 title: EMI Calculator
 permalink: /emi-calculator
 comments: false
-image: images/avatar.jpg
+image:
 imageshadow: true
 ---
 <html>

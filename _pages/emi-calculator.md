@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Ridhim Mehta x Just another Curious Traveller 
-permalink: /about
+title: EMI Calculator 
+permalink: /emi-calculator
 comments: false
 imageshadow: true
 ---

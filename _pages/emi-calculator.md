@@ -6,7 +6,7 @@ comments: false
 image: images/avatar.jpg
 imageshadow: true
 ---
-
+<html>
 <div id="emi-calculator" class="emi-container">
     <div class="calculator-grid">
         <div class="input-section">
@@ -662,6 +662,7 @@ function exportToPDF(schedule, loanAmount, annualInterestRate, emi, totalInteres
         doc.text(`Page ${i} of ${pageCount}`, 105, 285, { align: 'center' });
         doc.text('Confidential - For customer use only', 105, 290, { align: 'center' });
     }
+    </html>
     
     // Save the PDF
     doc.save(`EMI_Schedule_${new Date().toISOString().slice(0,10)}.pdf`);

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>German A1 Day 1 – Flashcards with Pronunciation</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f1f3f6;
+    color: #222;
+    margin: 0;
+    padding: 25px;
+  }
+  h1, h2 {
+    text-align: center;
+    color: #1d3557;
+  }
+  p {
+    text-align: center;
+    color: #444;
+  }
+  .section {
+    margin: 40px 0;
+  }
+  .flashcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    background: #fafafa;
+  }
+  .front {
+    font-size: 1.1em;
+    color: #1d3557;
+  }
+  .back {
+    font-size: 1em;
+    color: #457b9d;
+    display: none;
+    text-align: left;
+  }
+  .grammar, .dialogues {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .dialogue-line {
+    margin: 6px 0;
+  }
+  .speaker {
+    color: #1d3557;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>🇩🇪 German A1 – Day 1 Flashcards</h1>
+<p>Click a card to flip → see German, pronunciation, grammar, and example sentence</p>
+
+<!-- GREETINGS -->
+<div class="section">
+  <h2>👋 Greetings</h2>
+  <div class="flashcards">
+    <div class="card" onclick="flip(this)">
+      <div class="front">Hello</div>
+      <div class="back">
+        German: Hallo<br>
+        Pronunciation: <b>HAH-loh</b><br>
+        Grammar: Neutral, informal<br>
+        Example: Hallo! Wie geht’s?
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Good morning</div>
+      <div class="back">
+        German: Guten Morgen<br>
+        Pronunciation: <b>GOO-ten MOR-gen</b><br>
+        Grammar: Used until 11 AM<br>
+        Example: Guten Morgen, Anna!
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Good day</div>
+      <div class="back">
+        German: Guten Tag<br>
+        Pronunciation: <b>GOO-ten Tahk</b><br>
+        Grammar: Formal greeting<br>
+        Example: Guten Tag, Herr Müller.
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Good evening</div>
+      <div class="back">
+        German: Guten Abend<br>
+        Pronunciation: <b>GOO-ten AH-bent</b><br>
+        Grammar: From 6 PM onward<br>
+        Example: Guten Abend, wie geht es Ihnen?
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Bye</div>
+      <div class="back">
+        German: Tschüss<br>
+        Pronunciation: <b>Chüüs</b><br>
+        Grammar: Informal<br>
+        Example: Tschüss! Bis morgen!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRODUCTIONS -->
+<div class="section">
+  <h2>🧍‍♂️ Introducing Yourself</h2>
+  <div class="flashcards">
+    <div class="card" onclick="flip(this)">
+      <div class="front">My name is Ridhim</div>
+      <div class="back">
+        German: Ich heiße Ridhim<br>
+        Pronunciation: <b>Ish HY-seh Ridhim</b><br>
+        Grammar: “heißen” = to be called<br>
+        Example: Ich heiße Ridhim. Und du?
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">I am Ridhim</div>
+      <div class="back">
+        German: Ich bin Ridhim<br>
+        Pronunciation: <b>Ish bin Ridhim</b><br>
+        Grammar: “bin” = am<br>
+        Example: Ich bin Ridhim. Schön, dich kennenzulernen.
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">What’s your name?</div>
+      <div class="back">
+        German: Wie heißt du?<br>
+        Pronunciation: <b>Vee heist doo?</b><br>
+        Grammar: Informal<br>
+        Example: Hallo! Wie heißt du?
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Nice to meet you</div>
+      <div class="back">
+        German: Schön, dich kennenzulernen<br>
+        Pronunciation: <b>Shurn dish KEN-en-tsu-lair-nen</b><br>
+        Grammar: Phrase after introduction<br>
+        Example: Schön, dich kennenzulernen!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORIGIN & PLACE -->
+<div class="section">
+  <h2>🌍 Where You're From</h2>
+  <div class="flashcards">
+    <div class="card" onclick="flip(this)">
+      <div class="front">I come from India</div>
+      <div class="back">
+        German: Ich komme aus Indien<br>
+        Pronunciation: <b>Ish KOM-meh ows IN-dee-en</b><br>
+        Grammar: “aus” = from<br>
+        Example: Ich komme aus Indien.
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">I live in Delhi</div>
+      <div class="back">
+        German: Ich wohne in Delhi<br>
+        Pronunciation: <b>Ish VOH-ne in Delhi</b><br>
+        Grammar: “wohnen in” = live in<br>
+        Example: Ich wohne in Delhi.
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Where do you come from?</div>
+      <div class="back">
+        German: Woher kommst du?<br>
+        Pronunciation: <b>Vo-hair komst doo?</b><br>
+        Grammar: Informal<br>
+        Example: Woher kommst du?
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Where do you live?</div>
+      <div class="back">
+        German: Wo wohnst du?<br>
+        Pronunciation: <b>Vo vohnst doo?</b><br>
+        Grammar: Informal<br>
+        Example: Wo wohnst du?
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POLITE EXPRESSIONS -->
+<div class="section">
+  <h2>😊 Polite Phrases</h2>
+  <div class="flashcards">
+    <div class="card" onclick="flip(this)">
+      <div class="front">How are you?</div>
+      <div class="back">
+        German: Wie geht’s?<br>
+        Pronunciation: <b>Vee gates?</b><br>
+        Grammar: Informal<br>
+        Example: Hallo! Wie geht’s?
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">I’m fine, thank you</div>
+      <div class="back">
+        German: Mir geht’s gut<br>
+        Pronunciation: <b>Meer gates goot</b><br>
+        Grammar: Mir = to me, geht’s = goes<br>
+        Example: Mir geht’s gut, danke.
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Thank you</div>
+      <div class="back">
+        German: Danke<br>
+        Pronunciation: <b>DAHN-keh</b><br>
+        Example: Danke schön!
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="front">Please</div>
+      <div class="back">
+        German: Bitte<br>
+        Pronunciation: <b>BIT-teh</b><br>
+        Example: Ein Kaffee, bitte.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAR SECTION -->
+<div class="section">
+  <h2>⚙️ Tiny Grammar: "Ich bin" / "Ich heiße" / "Ich komme aus"</h2>
+  <div class="grammar">
+    <ul>
+      <li><b>Ich bin...</b> → I am ... <br>Example: Ich bin Ridhim. <b>Pronunciation:</b> Ish bin Ridhim</li>
+      <li><b>Ich heiße...</b> → My name is ... <br>Example: Ich heiße Ridhim. <b>Pronunciation:</b> Ish HY-seh Ridhim</li>
+      <li><b>Ich komme aus...</b> → I come from ... <br>Example: Ich komme aus Indien. <b>Pronunciation:</b> Ish KOM-meh ows IN-dee-en</li>
+    </ul>
+  </div>
+</div>
+
+<!-- MINI DIALOGUES -->
+<div class="section">
+  <h2>💬 Sample Conversations</h2>
+  <div class="dialogues">
+    <h3>1️⃣ Meeting Someone (Airport)</h3>
+    <p class="dialogue-line"><span class="speaker">A:</span> Hallo! Wie heißen Sie? <b>(HAH-loh! Vee HY-sen zee?)</b></p>
+    <p class="dialogue-line"><span class="speaker">B:</span> Ich heiße Ridhim. Und Sie? <b>(Ish HY-seh Ridhim. Oont zee?)</b></p>
+    <p class="dialogue-line"><span class="speaker">A:</span> Ich heiße Anna. Woher kommen Sie? <b>(Ish HY-seh Anna. Vo-hair KOM-men zee?)</b></p>
+    <p class="dialogue-line"><span class="speaker">B:</span> Ich komme aus Indien. Und Sie? <b>(Ish KOM-meh ows IN-dee-en. Oont zee?)</b></p>
+    <p class="dialogue-line"><span class="speaker">A:</span> Ich komme aus Deutschland. <b>(Ish KOM-meh ows DOY-ch-lahnd)</b></p>
+    <p class="dialogue-line"><span class="speaker">B:</span> Schön, Sie kennenzulernen! <b>(Shurn zee KEN-en-tsu-lair-nen)</b></p>
+    <p class="dialogue-line"><span class="speaker">A:</span> Ebenfalls! <b>(EH-ben-fahls!)</b></p>
+  </div>
+</div>
+
+<footer align="center"><a href="https://ridh.im/german/german-day1">Back to home</a></footer>
+<script>
+function flip(card) {
+  const front = card.querySelector('.front');
+  const back = card.querySelector('.back');
+  const isFront = front.style.display !== 'none';
+  front.style.display = isFront ? 'none' : 'block';
+  back.style.display = isFront ? 'block' : 'none';
+}
+</script>
+
+</body>
+</html>

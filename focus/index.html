@@ -1,635 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>en Focus Timer - Ridhim Mehta</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zen Focus Timer - Ridhim Mehta</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #006064;
+      transition: background-color 1s ease;
+      overflow: hidden;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 105, 148, 0.1);
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      backdrop-filter: blur(10px);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      z-index: 10;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-weight: 300;
+      font-size: 2.2rem;
+      color: #00838f;
+    }
+    .timer-display {
+      font-size: 5rem;
+      font-weight: 200;
+      margin: 30px 0;
+      color: #006064;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    button {
+      background-color: #4db6ac;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    button:hover {
+      background-color: #26a69a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    button:disabled {
+      background-color: #b2dfdb;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .time-options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .time-btn {
+      background-color: #80deea;
+      color: #006064;
+      font-weight: 500;
+    }
+    .time-btn.active {
+      background-color: #26c6da;
+      color: white;
+    }
+    .progress-container {
+      height: 8px;
+      background-color: #e0f2f1;
+      border-radius: 4px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4db6ac, #26c6da);
+      width: 0%;
+      transition: width 1s linear;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #00838f;
+      min-height: 30px;
+    }
 
-        body {
-            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #006064;
-            transition: background-color 1s ease;
-        }
+    /* Focus Mode Styles */
+    .focus-mode {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      transition: background 5s ease;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 40s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
 
-        .container {
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 105, 148, 0.1);
-            padding: 40px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            backdrop-filter: blur(10px);
-            transition: transform 0.5s ease, opacity 0.5s ease;
-        }
-
-        h1 {
-            margin-bottom: 30px;
-            font-weight: 300;
-            font-size: 2.2rem;
-            color: #00838f;
-        }
-
-        .timer-display {
-            font-size: 5rem;
-            font-weight: 200;
-            margin: 30px 0;
-            color: #006064;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        button {
-            background-color: #4db6ac;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        button:hover {
-            background-color: #26a69a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:disabled {
-            background-color: #b2dfdb;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .time-options {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .time-btn {
-            background-color: #80deea;
-            color: #006064;
-            font-weight: 500;
-        }
-
-        .time-btn.active {
-            background-color: #26c6da;
-            color: white;
-        }
-
-        .progress-container {
-            height: 8px;
-            background-color: #e0f2f1;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #4db6ac, #26c6da);
-            width: 0%;
-            transition: width 1s linear;
-        }
-
-        .message {
-            margin-top: 20px;
-            font-size: 1.1rem;
-            color: #00838f;
-            min-height: 30px;
-        }
-
-        /* Focus Mode Styles */
-        .focus-mode {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            transition: background-color 1s ease;
-        }
-
-        .focus-timer {
-            font-size: 8rem;
-            font-weight: 200;
-            color: white;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 40px;
-        }
-
-        .stop-btn {
-            position: absolute;
-            bottom: 40px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .stop-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .focus-message {
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Fullscreen exit button */
-        .exit-fullscreen {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            z-index: 101;
-        }
-
-        .exit-fullscreen:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        /* Bell animation */
-        .bell-container {
-            position: absolute;
-            top: 20%;
-            display: none;
-        }
-
-        .bell {
-            font-size: 5rem;
-            color: white;
-            animation: ring 2s ease-in-out infinite;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        @keyframes ring {
-            0% { transform: rotate(0deg); }
-            10% { transform: rotate(15deg); }
-            20% { transform: rotate(-15deg); }
-            30% { transform: rotate(10deg); }
-            40% { transform: rotate(-10deg); }
-            50% { transform: rotate(5deg); }
-            60% { transform: rotate(-5deg); }
-            70% { transform: rotate(2deg); }
-            80% { transform: rotate(-2deg); }
-            90% { transform: rotate(1deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 25px;
-            }
-            
-            .timer-display {
-                font-size: 3.5rem;
-            }
-            
-            .focus-timer {
-                font-size: 5rem;
-            }
-            
-            .bell {
-                font-size: 4rem;
-            }
-            
-            .controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            button {
-                width: 80%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .timer-display {
-                font-size: 2.8rem;
-            }
-            
-            .focus-timer {
-                font-size: 4rem;
-            }
-            
-            .bell {
-                font-size: 3rem;
-            }
-            
-            .time-options {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .time-btn {
-                width: 80%;
-            }
-            
-            .exit-fullscreen {
-                top: 15px;
-                right: 15px;
-                width: 35px;
-                height: 35px;
-            }
-        }
-
-        /* Hide elements in fullscreen */
-        .fullscreen-hide {
-            display: none !important;
-        }
-    </style>
+    .focus-timer {
+      font-size: 8rem;
+      font-weight: 200;
+      color: white;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 40px;
+    }
+    .stop-btn {
+      position: absolute;
+      bottom: 40px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    .stop-btn:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+    }
+    .focus-message {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .exit-fullscreen {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      z-index: 101;
+    }
+    .exit-fullscreen:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+    .bell-container {
+      position: absolute;
+      top: 20%;
+      display: none;
+    }
+    .bell {
+      font-size: 5rem;
+      color: white;
+      animation: ring 2s ease-in-out infinite;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    @keyframes ring {
+      0% { transform: rotate(0deg); }
+      10% { transform: rotate(15deg); }
+      20% { transform: rotate(-15deg); }
+      30% { transform: rotate(10deg); }
+      40% { transform: rotate(-10deg); }
+      50% { transform: rotate(5deg); }
+      60% { transform: rotate(-5deg); }
+      70% { transform: rotate(2deg); }
+      80% { transform: rotate(-2deg); }
+      90% { transform: rotate(1deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .pulse {
+      animation: pulse 1s infinite;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .fade-in {
+      animation: fadeIn 1s ease;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+      .timer-display {
+        font-size: 3.5rem;
+      }
+      .focus-timer {
+        font-size: 5rem;
+      }
+      .bell {
+        font-size: 4rem;
+      }
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      button {
+        width: 80%;
+      }
+    }
+    @media (max-width: 480px) {
+      .timer-display {
+        font-size: 2.8rem;
+      }
+      .focus-timer {
+        font-size: 4rem;
+      }
+      .bell {
+        font-size: 3rem;
+      }
+      .time-options {
+        flex-direction: column;
+        align-items: center;
+      }
+      .time-btn {
+        width: 80%;
+      }
+      .exit-fullscreen {
+        top: 15px;
+        right: 15px;
+        width: 35px;
+        height: 35px;
+      }
+    }
+    .fullscreen-hide {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
-    <div class="container" id="main-container">
-        <h1>Zen Focus Timer</h1>
-        
-        <div class="time-options">
-            <button class="time-btn" id="25min">25 min</button>
-            <button class="time-btn" id="plus5">+5 min</button>
-        </div>
-        
-        <div class="timer-display" id="timer">25:00</div>
-        
-        <div class="progress-container">
-            <div class="progress-bar" id="progress"></div>
-        </div>
-        
-        <div class="controls">
-            <button id="start">Start Focus</button>
-            <button id="pause">Pause</button>
-            <button id="reset">Reset</button>
-        </div>
-        
-        <div class="message" id="message">Ready to focus? Select your time and begin.</div>
+  <div class="container" id="main-container">
+    <h1>Zen Focus Timer</h1>
+
+    <div class="time-options">
+      <button class="time-btn" id="25min">25 min</button>
+      <button class="time-btn" id="plus5">+5 min</button>
     </div>
 
-    <div class="focus-mode" id="focus-mode">
-        <div class="exit-fullscreen fullscreen-hide" id="exit-fullscreen">
-            <i class="fas fa-times"></i>
-        </div>
-        <div class="bell-container" id="bell-container">
-            <div class="bell">
-                <i class="fas fa-bell"></i>
-            </div>
-        </div>
-        <div class="focus-message" id="focus-message">Stay focused...</div>
-        <div class="focus-timer" id="focus-timer">25:00</div>
-        <button class="stop-btn" id="stop-focus">
-            <i class="fas fa-stop"></i> End Focus Session
-        </button>
+    <div class="timer-display" id="timer">25:00</div>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progress"></div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const timerDisplay = document.getElementById('timer');
-            const focusTimerDisplay = document.getElementById('focus-timer');
-            const startBtn = document.getElementById('start');
-            const pauseBtn = document.getElementById('pause');
-            const resetBtn = document.getElementById('reset');
-            const time25Btn = document.getElementById('25min');
-            const plus5Btn = document.getElementById('plus5');
-            const message = document.getElementById('message');
-            const focusMessage = document.getElementById('focus-message');
-            const progressBar = document.getElementById('progress');
-            const mainContainer = document.getElementById('main-container');
-            const focusMode = document.getElementById('focus-mode');
-            const stopFocusBtn = document.getElementById('stop-focus');
-            const bellContainer = document.getElementById('bell-container');
-            const exitFullscreenBtn = document.getElementById('exit-fullscreen');
-            
-            let timeLeft = 25 * 60; // 25 minutes in seconds
-            let timerInterval = null;
-            let isRunning = false;
-            let totalTime = timeLeft;
-            let currentColorIndex = 0;
-            let wakeLock = null;
-            
-            // Calming color palette for focus mode
-            const focusColors = [
-                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
-            ];
-            
-            // Request wake lock to keep screen on
-            async function requestWakeLock() {
-                try {
-                    if ('wakeLock' in navigator) {
-                        wakeLock = await navigator.wakeLock.request('screen');
-                        console.log('Wake Lock is active');
-                        
-                        wakeLock.addEventListener('release', () => {
-                            console.log('Wake Lock was released');
-                        });
-                    }
-                } catch (err) {
-                    console.error(`${err.name}, ${err.message}`);
-                }
-            }
-            
-            // Release wake lock
-            function releaseWakeLock() {
-                if (wakeLock !== null) {
-                    wakeLock.release();
-                    wakeLock = null;
-                }
-            }
-            
-            // Enter fullscreen mode
-            function enterFullscreen() {
-                const element = document.documentElement;
-                
-                if (element.requestFullscreen) {
-                    element.requestFullscreen();
-                } else if (element.mozRequestFullScreen) {
-                    element.mozRequestFullScreen();
-                } else if (element.webkitRequestFullscreen) {
-                    element.webkitRequestFullscreen();
-                } else if (element.msRequestFullscreen) {
-                    element.msRequestFullscreen();
-                }
-                
-                // Show exit button after a short delay
-                setTimeout(() => {
-                    exitFullscreenBtn.classList.remove('fullscreen-hide');
-                }, 500);
-            }
-            
-            // Exit fullscreen mode
-            function exitFullscreen() {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-                
-                exitFullscreenBtn.classList.add('fullscreen-hide');
-            }
-            
-            // Handle fullscreen change
-            document.addEventListener('fullscreenchange', handleFullscreenChange);
-            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
-            
-            function handleFullscreenChange() {
-                const isFullscreen = document.fullscreenElement || 
-                                    document.webkitFullscreenElement || 
-                                    document.mozFullScreenElement || 
-                                    document.msFullscreenElement;
-                
-                if (!isFullscreen) {
-                    exitFullscreenBtn.classList.add('fullscreen-hide');
-                }
-            }
-            
-            // Create bell sound
-            function createBellSound() {
-                const gongSound = new Audio('https://ridh.im/focus/gong.mp3');
-                gongSound.play();
-            }
-            
-            // Format time as MM:SS
-            function formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-            
-            // Update the timer display
-            function updateDisplay() {
-                timerDisplay.textContent = formatTime(timeLeft);
-                focusTimerDisplay.textContent = formatTime(timeLeft);
-                const progressPercent = ((totalTime - timeLeft) / totalTime) * 100;
-                progressBar.style.width = `${progressPercent}%`;
-            }
-            
-            // Change background color in focus mode
-            function changeBackgroundColor() {
-                currentColorIndex = (currentColorIndex + 1) % focusColors.length;
-                focusMode.style.background = focusColors[currentColorIndex];
-            }
-            
-            // Start the timer
-            function startTimer() {
-                if (isRunning) return;
-                
-                isRunning = true;
-                startBtn.disabled = true;
-                pauseBtn.disabled = false;
-                message.textContent = "Stay focused...";
-                timerDisplay.classList.add('pulse');
-                
-                // Enter fullscreen mode
-                enterFullscreen();
-                
-                // Request wake lock to keep screen on
-                requestWakeLock();
-                
-                // Enter focus mode
-                mainContainer.style.transform = 'scale(0.9)';
-                mainContainer.style.opacity = '0';
-                setTimeout(() => {
-                    mainContainer.style.display = 'none';
-                    focusMode.style.display = 'flex';
-                    focusMode.classList.add('fade-in');
-                    changeBackgroundColor();
-                }, 500);
-                
-                timerInterval = setInterval(() => {
-                    timeLeft--;
-                    updateDisplay();
-                    
-                    // Change background color every 30 seconds
-                    if (timeLeft % 30 === 0) {
-                        changeBackgroundColor();
-                    }
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        isRunning = false;
-                        focusMessage.textContent = "Time's up! Take a break.";
-                        timerDisplay.classList.remove('pulse');
-                        startBtn.disabled = false;
-                        
-                        // Show and animate the bell
-                        bellContainer.style.display = 'block';
-                        
-                        // Play the Tibetan gong sound
-                        createBellSound();
-                        
-                        // Keep screen on for 15 more seconds, then exit
-                        setTimeout(() => {
-                            exitFocusMode();
-                        }, 15000);
-                    }
-                }, 1000);
-            }
-            
-            // Pause the timer
-            function pauseTimer() {
-                if (!isRunning) return;
-                
-                clearInterval(timerInterval);
-                isRunning = false;
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
-                message.textContent = "Paused";
-                timerDisplay.classList.remove('pulse');
-            }
-            
-            // Reset the timer
-            function resetTimer() {
-                clearInterval(timerInterval);
-                isRunning = false;
-                timeLeft = totalTime;
-                updateDisplay();
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
-                message.textContent = "Ready to focus? Select your time and begin.";
-                timerDisplay.classList.remove('pulse');
-            }
-            
-            // Set timer to 25 minutes
-            function set25Minutes() {
-                if (isRunning) return;
-                
-                timeLeft = 25 * 60;
-                totalTime = timeLeft;
-                updateDisplay();
-                time25Btn.classList.add('active');
-                plus5Btn.classList.remove('active');
-                message.textContent = "25-minute focus session";
-            }
-            
-            // Add 5 minutes to the timer
-            function add5Minutes() {
-                if (isRunning) return;
-                
-                timeLeft += 5 * 60;
-                totalTime = timeLeft;
-                updateDisplay();
-                time25Btn.classList.remove('active');
-                plus5Btn.classList.add('active');
-                message.textContent = `${Math.floor(timeLeft / 60)}-minute focus session`;
-            }
-            
-            // Exit focus mode
-            function exitFocusMode() {
-                clearInterval(timerInterval);
-                isRunning = false;
-                
-                // Release wake lock
-                releaseWakeLock();
-                
-                // Exit fullscreen
-                exitFullscreen();
-                
-                focusMode.style.display = 'none';
-                bellContainer.style.display = 'none';
-                mainContainer.style.display = 'block';
-                setTimeout(() => {
-                    mainContainer.style.transform = 'scale(1)';
-                    mainContainer.style.opacity = '1';
-                }, 50);
-                
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
-                message.textContent = "Focus session completed";
-                timerDisplay.classList.remove('pulse');
-            }
-            
-            // Event listeners
-            startBtn.addEventListener('click', startTimer);
-            pauseBtn.addEventListener('click', pauseTimer);
-            resetBtn.addEventListener('click', resetTimer);
-            time25Btn.addEventListener('click', set25Minutes);
-            plus5Btn.addEventListener('click', add5Minutes);
-            stopFocusBtn.addEventListener('click', exitFocusMode);
-            exitFullscreenBtn.addEventListener('click', exitFocusMode);
-            
-            // Initialize
-            updateDisplay();
-            pauseBtn.disabled = true;
-            time25Btn.classList.add('active');
-        });
-    </script>
+    <div class="controls">
+      <button id="start">Start Focus</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+    </div>
+
+    <div class="message" id="message">Ready to focus? Select your time and begin.</div>
+  </div>
+
+  <div class="focus-mode" id="focus-mode">
+    <div class="exit-fullscreen fullscreen-hide" id="exit-fullscreen">
+      <i class="fas fa-times"></i>
+    </div>
+    <div class="bell-container" id="bell-container">
+      <div class="bell">
+        <i class="fas fa-bell"></i>
+      </div>
+    </div>
+    <div class="focus-message" id="focus-message">Stay focused...</div>
+    <div class="focus-timer" id="focus-timer">25:00</div>
+    <button class="stop-btn" id="stop-focus">
+      <i class="fas fa-stop"></i> End Focus Session
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const timerDisplay = document.getElementById('timer');
+      const focusTimerDisplay = document.getElementById('focus-timer');
+      const startBtn = document.getElementById('start');
+      const pauseBtn = document.getElementById('pause');
+      const resetBtn = document.getElementById('reset');
+      const time25Btn = document.getElementById('25min');
+      const plus5Btn = document.getElementById('plus5');
+      const message = document.getElementById('message');
+      const focusMessage = document.getElementById('focus-message');
+      const progressBar = document.getElementById('progress');
+      const mainContainer = document.getElementById('main-container');
+      const focusMode = document.getElementById('focus-mode');
+      const stopFocusBtn = document.getElementById('stop-focus');
+      const bellContainer = document.getElementById('bell-container');
+      const exitFullscreenBtn = document.getElementById('exit-fullscreen');
+
+      let timeLeft = 25 * 60; // 25 minutes default
+      let totalTime = timeLeft;
+      let timerInterval = null;
+      let isRunning = false;
+      let wakeLock = null;
+
+      // Request wake lock to keep screen awake
+      async function requestWakeLock() {
+        try {
+          if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+            wakeLock.addEventListener('release', () => {
+              console.log('Wake Lock released');
+            });
+            console.log('Wake Lock active');
+          }
+        } catch (err) {
+          console.error('Wake Lock error:', err.name, err.message);
+        }
+      }
+
+      // Release wake lock if any
+      async function releaseWakeLock() {
+        if (wakeLock !== null) {
+          try {
+            await wakeLock.release();
+          } catch (e) {
+            console.warn('Error releasing Wake Lock:', e);
+          }
+          wakeLock = null;
+        }
+      }
+
+      // Enter fullscreen
+      async function enterFullscreen() {
+        const elem = document.documentElement;
+        try {
+          if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+          } else if (elem.webkitRequestFullscreen) {
+            await elem.webkitRequestFullscreen();
+          } else if (elem.mozRequestFullScreen) {
+            await elem.mozRequestFullScreen();
+          } else if (elem.msRequestFullscreen) {
+            await elem.msRequestFullscreen();
+          }
+          setTimeout(() => {
+            exitFullscreenBtn.classList.remove('fullscreen-hide');
+          }, 300);
+        } catch (err) {
+          console.error('Fullscreen error:', err);
+        }
+      }
+
+      // Exit fullscreen
+      async function exitFullscreen() {
+        try {
+          if (document.exitFullscreen) {
+            await document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            await document.webkitExitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            await document.mozCancelFullScreen();
+          } else if (document.msExitFullscreen) {
+            await document.msExitFullscreen();
+          }
+          exitFullscreenBtn.classList.add('fullscreen-hide');
+        } catch (err) {
+          console.error('Exit fullscreen error:', err);
+        }
+      }
+
+      // Handle fullscreen exit button click
+      exitFullscreenBtn.addEventListener('click', () => {
+        exitFocusMode();
+      });
+
+      // Format seconds as MM:SS
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }
+
+      // Update timer displays and progress bar
+      function updateDisplay() {
+        timerDisplay.textContent = formatTime(timeLeft);
+        focusTimerDisplay.textContent = formatTime(timeLeft);
+        const progressPercent = ((totalTime - timeLeft) / totalTime) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+      }
+
+      // Play bell sound
+      function playBellSound() {
+        const gongSound = new Audio('https://ridh.im/focus/gong.mp3');
+        gongSound.play();
+      }
+
+      // Animate background color change every 30 seconds (handled by CSS animation now)
+      // Removed manual JS switching from original code for smooth CSS animation
+
+      // Start the focus timer workflow
+      async function startTimer() {
+        if (isRunning) return;
+
+        isRunning = true;
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        message.textContent = "Stay focused...";
+        timerDisplay.classList.add('pulse');
+
+        // Enter fullscreen with await
+        await enterFullscreen();
+
+        // Request wake lock
+        await requestWakeLock();
+
+        // Hide main container and show focus mode
+        mainContainer.style.transform = 'scale(0.9)';
+        mainContainer.style.opacity = '0';
+        setTimeout(() => {
+          mainContainer.style.display = 'none';
+          focusMode.style.display = 'flex';
+          focusMode.classList.add('fade-in');
+        }, 500);
+
+        timerInterval = setInterval(async () => {
+          timeLeft--;
+          updateDisplay();
+
+          if (timeLeft % 30 === 0) {
+            // Background handles animation with CSS, no manual update needed here
+          }
+
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            focusMessage.textContent = "Time's up! Take a break.";
+            timerDisplay.classList.remove('pulse');
+            startBtn.disabled = false;
+            bellContainer.style.display = 'block';
+            playBellSound();
+
+            // Keep screen awake 15 seconds after timer ends
+            setTimeout(async () => {
+              bellContainer.style.display = 'none';
+              await exitFocusMode();
+            }, 15000);
+          }
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        if (!isRunning) return;
+
+        clearInterval(timerInterval);
+        isRunning = false;
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        message.textContent = "Paused";
+        timerDisplay.classList.remove('pulse');
+
+        // Release wake lock when paused
+        releaseWakeLock();
+      }
+
+      function resetTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        timeLeft = totalTime;
+        updateDisplay();
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        message.textContent = "Ready to focus? Select your time and begin.";
+        timerDisplay.classList.remove('pulse');
+
+        // Release wake lock
+        releaseWakeLock();
+
+        // Exit fullscreen if any
+        exitFullscreen();
+
+        // Show main container, hide focus mode
+        focusMode.style.display = 'none';
+        bellContainer.style.display = 'none';
+        mainContainer.style.display = 'block';
+        mainContainer.style.transform = 'scale(1)';
+        mainContainer.style.opacity = '1';
+      }
+
+      function set25Minutes() {
+        if (isRunning) return;
+
+        timeLeft = 25 * 60;
+        totalTime = timeLeft;
+        updateDisplay();
+        time25Btn.classList.add('active');
+        plus5Btn.classList.remove('active');
+        message.textContent = "25-minute focus session";
+      }
+
+      function add5Minutes() {
+        if (isRunning) return;
+
+        timeLeft += 5 * 60;
+        totalTime = timeLeft;
+        updateDisplay();
+        time25Btn.classList.remove('active');
+        plus5Btn.classList.add('active');
+        message.textContent = `${Math.floor(timeLeft / 60)}-minute focus session`;
+      }
+
+      // Exit focus mode cleanup
+      async function exitFocusMode() {
+        clearInterval(timerInterval);
+        isRunning = false;
+
+        await releaseWakeLock();
+        await exitFullscreen();
+
+        focusMode.style.display = 'none';
+        bellContainer.style.display = 'none';
+        mainContainer.style.display = 'block';
+        setTimeout(() => {
+          mainContainer.style.transform = 'scale(1)';
+          mainContainer.style.opacity = '1';
+        }, 50);
+
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        message.textContent = "Focus session completed";
+        timerDisplay.classList.remove('pulse');
+        timeLeft = totalTime;
+        updateDisplay();
+      }
+
+      // Event listeners
+      startBtn.addEventListener('click', startTimer);
+      pauseBtn.addEventListener('click', pauseTimer);
+      resetBtn.addEventListener('click', resetTimer);
+      time25Btn.addEventListener('click', set25Minutes);
+      plus5Btn.addEventListener('click', add5Minutes);
+      stopFocusBtn.addEventListener('click', exitFocusMode);
+
+      // Also listen on fullscreen change to hide exit button correctly
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+          exitFullscreenBtn.classList.add('fullscreen-hide');
+        }
+      });
+
+      exitFullscreenBtn.addEventListener('click', exitFocusMode);
+
+      // Initialize
+      updateDisplay();
+      pauseBtn.disabled = true;
+      time25Btn.classList.add('active');
+    });
+  </script>
 </body>
 </html>

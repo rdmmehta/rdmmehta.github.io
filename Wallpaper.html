@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Daily Zen Wallpaper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Helvetica, Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 17px;
+      font-weight: 400;
+      opacity: 0.5;
+      margin-bottom: 14px;
+    }
+
+    canvas {
+      border-radius: 26px;
+      max-width: 92%;
+      box-shadow: 0 18px 45px rgba(15,23,42,0.12);
+    }
+
+    button {
+      margin-top: 22px;
+      padding: 14px 28px;
+      font-size: 15px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      background: #0f172a;
+      color: white;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 12px;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>A Quiet Reminder</h1>
+
+<canvas id="wallpaper" width="1170" height="2532"></canvas>
+
+<button onclick="downloadWallpaper()">Download Wallpaper</button>
+
+<footer>
+  Calm • Light • Present
+  Powered by <a href="https://ridh.im">Ridhim Mehta</a>
+</footer>
+
+<script>
+  const canvas = document.getElementById("wallpaper");
+  const ctx = canvas.getContext("2d");
+
+  const now = new Date();
+  const year = now.getFullYear();
+
+  const start = new Date(year, 0, 1);
+  const end = new Date(year, 11, 31);
+
+  const dayOfYear = Math.floor((now - start) / 86400000) + 1;
+  const totalDays = Math.floor((end - start) / 86400000) + 1;
+
+  // Includes today
+  const daysLeft = totalDays - dayOfYear + 1;
+  const percentLeft = Math.round((daysLeft / totalDays) * 100);
+
+  const messages = [
+    "Nothing needs to be fixed right now.",
+    "Breathe. You are here.",
+    "This moment is enough.",
+    "Move gently through today.",
+    "There is no rush.",
+    "Let things unfold.",
+    "You are allowed to be slow."
+  ];
+
+  const message = messages[dayOfYear % messages.length];
+
+  /* ---------- ZEN LIGHT BACKGROUND ---------- */
+
+  // Base white
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Soft mist-like light fields
+  function mist(x, y, radius, color, opacity) {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    g.addColorStop(0, `rgba(${color}, ${opacity})`);
+    g.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  mist(canvas.width * 0.3, canvas.height * 0.25, 700, "186,230,253", 0.12);
+  mist(canvas.width * 0.7, canvas.height * 0.35, 800, "220,252,231", 0.10);
+  mist(canvas.width * 0.5, canvas.height * 0.75, 900, "254,243,199", 0.12);
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#0f172a";
+
+  // Year
+  ctx.font = "400 26px Helvetica";
+  ctx.globalAlpha = 0.4;
+  ctx.fillText(year, canvas.width / 2, 220);
+  ctx.globalAlpha = 1;
+
+  // Main Zen message
+  ctx.font = "500 60px Helvetica";
+  wrapText(message, canvas.width / 2, 760, 880, 80);
+
+  // Soft divider
+  ctx.strokeStyle = "rgba(15,23,42,0.08)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(460, 900);
+  ctx.lineTo(canvas.width - 460, 900);
+  ctx.stroke();
+
+  // Remaining days
+  ctx.font = "400 40px Helvetica";
+  ctx.globalAlpha = 0.6;
+  ctx.fillText(`${daysLeft} days remaining`, canvas.width / 2, 990);
+
+  // Percentage written clearly
+  ctx.font = "300 30px Helvetica";
+  ctx.globalAlpha = 0.45;
+  ctx.fillText(`${percentLeft}% of the year remains`, canvas.width / 2, 1045);
+  ctx.globalAlpha = 1;
+
+  // Bottom whisper
+  ctx.font = "300 26px Helvetica";
+  ctx.globalAlpha = 0.35;
+  ctx.fillText("Nothing to chase. Just be.", canvas.width / 2, canvas.height - 160);
+  ctx.globalAlpha = 1;
+
+  function wrapText(text, x, y, maxWidth, lineHeight) {
+    const words = text.split(" ");
+    let line = "";
+    let lines = [];
+
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + " ";
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && i > 0) {
+        lines.push(line);
+        line = words[i] + " ";
+      } else {
+        line = testLine;
+      }
+    }
+    lines.push(line);
+
+    lines.forEach((l, i) => {
+      ctx.fillText(l, x, y + i * lineHeight);
+    });
+  }
+
+  function downloadWallpaper() {
+    const link = document.createElement("a");
+    link.download = "amoled-light-zen-wallpaper.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+</script>
+
+</body>
+</html>

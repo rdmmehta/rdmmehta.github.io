@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Minimal Aesthetic Wallpaper Generator</title>
+<title>Minimal Quote Wallpaper Generator</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
@@ -14,6 +14,13 @@ body {
     font-family: 'Poppins', sans-serif;
     background:#f4f1ed;
     min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* MAIN CONTENT WRAPPER */
+.main-content {
+    flex:1;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -91,6 +98,13 @@ canvas {
     height:100%;
 }
 
+footer {
+    text-align:center;
+    padding:15px 0;
+    font-size:14px;
+    color:#666;
+}
+
 @media(max-width:900px){
     .container{ grid-template-columns:1fr; }
 }
@@ -99,18 +113,24 @@ canvas {
 
 <body>
 
-<div class="container">
-    <div class="left-panel">
-        <h1>Minimal Quote Wallpaper</h1>
-        <textarea id="quoteInput" placeholder="Enter your quote..."></textarea>
-        <button class="generate" onclick="generateWallpaper()">Create</button>
-        <button class="download" id="downloadBtn" onclick="downloadWallpaper()">Download HD</button>
-    </div>
+<div class="main-content">
+    <div class="container">
+        <div class="left-panel">
+            <h1>Minimal Quote Wallpaper</h1>
+            <textarea id="quoteInput" placeholder="Enter your quote..."></textarea>
+            <button class="generate" onclick="generateWallpaper()">Create</button>
+            <button class="download" id="downloadBtn" onclick="downloadWallpaper()">Download HD</button>
+        </div>
 
-    <div class="preview-frame">
-        <canvas id="wallpaperCanvas" width="1080" height="1920"></canvas>
+        <div class="preview-frame">
+            <canvas id="wallpaperCanvas" width="1080" height="1920"></canvas>
+        </div>
     </div>
 </div>
+
+<footer>
+    Created by Ridhim Mehta
+</footer>
 
 <script>
 const canvas = document.getElementById("wallpaperCanvas");
@@ -142,18 +162,18 @@ function drawBlob(x,y,r,color){
 }
 
 function wrapText(context,text,maxWidth){
-    const words = text.split(' ');
-    let lines = [];
-    let line = '';
+    const words=text.split(' ');
+    let lines=[];
+    let line='';
 
-    for(let n=0; n<words.length; n++){
-        const testLine = line + words[n] + ' ';
-        const testWidth = context.measureText(testLine).width;
-        if(testWidth > maxWidth && n > 0){
+    for(let n=0;n<words.length;n++){
+        const testLine=line+words[n]+' ';
+        const testWidth=context.measureText(testLine).width;
+        if(testWidth>maxWidth && n>0){
             lines.push(line.trim());
-            line = words[n] + ' ';
+            line=words[n]+' ';
         } else {
-            line = testLine;
+            line=testLine;
         }
     }
     lines.push(line.trim());
@@ -161,7 +181,7 @@ function wrapText(context,text,maxWidth){
 }
 
 function generateWallpaper(){
-    const quote = document.getElementById("quoteInput").value.trim();
+    const quote=document.getElementById("quoteInput").value.trim();
     if(!quote) return;
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -178,27 +198,24 @@ function generateWallpaper(){
     ctx.textAlign="center";
     ctx.font="bold 120px Caveat";
 
-    const maxWidth = 800;
-    const lineHeight = 150;
+    const maxWidth=800;
+    const lineHeight=150;
 
-    // Split by manual line breaks first
-    const paragraphs = quote.split("\n");
-    let allLines = [];
+    const paragraphs=quote.split("\n");
+    let allLines=[];
 
-    paragraphs.forEach(p => {
-        const wrapped = wrapText(ctx, p, maxWidth);
-        allLines = allLines.concat(wrapped);
+    paragraphs.forEach(p=>{
+        const wrapped=wrapText(ctx,p,maxWidth);
+        allLines=allLines.concat(wrapped);
     });
 
-    // Calculate vertical centering
-    const totalHeight = allLines.length * lineHeight;
-    let y = (canvas.height - totalHeight) / 2;
+    const totalHeight=allLines.length*lineHeight;
+    let y=(canvas.height-totalHeight)/2;
+    const x=canvas.width/2;
 
-    const x = canvas.width / 2;
-
-    allLines.forEach(line => {
-        ctx.fillText(line, x, y);
-        y += lineHeight;
+    allLines.forEach(line=>{
+        ctx.fillText(line,x,y);
+        y+=lineHeight;
     });
 
     downloadBtn.style.display="inline-block";
@@ -212,6 +229,5 @@ function downloadWallpaper(){
 }
 </script>
 
-  <footer align="center">Created by Ridhim Mehta</footer>
 </body>
 </html>

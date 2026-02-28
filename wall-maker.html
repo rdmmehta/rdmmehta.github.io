@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Minimal Aesthetic Wallpaper Generator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background:#f4f1ed;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container {
+    width:100%;
+    max-width:1100px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.left-panel {
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(10px);
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin-bottom:20px;
+    font-size:24px;
+    color:#333;
+}
+
+textarea {
+    width:100%;
+    height:130px;
+    border-radius:12px;
+    border:1px solid #ddd;
+    padding:15px;
+    font-size:16px;
+    resize:none;
+    margin-bottom:20px;
+}
+
+button {
+    padding:12px 25px;
+    border-radius:30px;
+    border:none;
+    cursor:pointer;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.generate {
+    background:#e6cfc3;
+    color:#333;
+}
+
+.download {
+    background:white;
+    border:1px solid #ccc;
+    margin-left:10px;
+    display:none;
+}
+
+button:hover { transform:scale(1.05); }
+
+.preview-frame {
+    width:320px;
+    height:570px;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 30px 70px rgba(0,0,0,0.15);
+    background:white;
+}
+
+canvas {
+    width:100%;
+    height:100%;
+}
+
+@media(max-width:900px){
+    .container{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="left-panel">
+        <h1>Minimal Quote Wallpaper</h1>
+        <textarea id="quoteInput" placeholder="Enter your quote..."></textarea>
+        <button class="generate" onclick="generateWallpaper()">Create</button>
+        <button class="download" id="downloadBtn" onclick="downloadWallpaper()">Download HD</button>
+    </div>
+
+    <div class="preview-frame">
+        <canvas id="wallpaperCanvas" width="1080" height="1920"></canvas>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById("wallpaperCanvas");
+const ctx = canvas.getContext("2d");
+const downloadBtn = document.getElementById("downloadBtn");
+
+function randomPastels(){
+    const colors = [
+        ["#e8d8c3","#c9c2b8","#f2c6b4"],
+        ["#f3d2c1","#d9d9d9","#f0e4d7"],
+        ["#e6cfc3","#d7ccc8","#f5e6da"],
+        ["#f0d9d0","#c7c7c7","#f4ede6"]
+    ];
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function drawBlob(x,y,r,color){
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.bezierCurveTo(
+        x+r*Math.random(), y-r*Math.random(),
+        x-r*Math.random(), y+r*Math.random(),
+        x,y
+    );
+    ctx.fillStyle=color;
+    ctx.globalAlpha=0.6;
+    ctx.fill();
+    ctx.globalAlpha=1;
+}
+
+function wrapText(context,text,maxWidth){
+    const words = text.split(' ');
+    let lines = [];
+    let line = '';
+
+    for(let n=0; n<words.length; n++){
+        const testLine = line + words[n] + ' ';
+        const testWidth = context.measureText(testLine).width;
+        if(testWidth > maxWidth && n > 0){
+            lines.push(line.trim());
+            line = words[n] + ' ';
+        } else {
+            line = testLine;
+        }
+    }
+    lines.push(line.trim());
+    return lines;
+}
+
+function generateWallpaper(){
+    const quote = document.getElementById("quoteInput").value.trim();
+    if(!quote) return;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="#f6f2ee";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    const colors=randomPastels();
+    drawBlob(200,300,500,colors[0]);
+    drawBlob(900,400,600,colors[1]);
+    drawBlob(500,1500,700,colors[2]);
+
+    ctx.fillStyle="#333";
+    ctx.textAlign="center";
+    ctx.font="bold 120px Caveat";
+
+    const maxWidth = 800;
+    const lineHeight = 150;
+
+    // Split by manual line breaks first
+    const paragraphs = quote.split("\n");
+    let allLines = [];
+
+    paragraphs.forEach(p => {
+        const wrapped = wrapText(ctx, p, maxWidth);
+        allLines = allLines.concat(wrapped);
+    });
+
+    // Calculate vertical centering
+    const totalHeight = allLines.length * lineHeight;
+    let y = (canvas.height - totalHeight) / 2;
+
+    const x = canvas.width / 2;
+
+    allLines.forEach(line => {
+        ctx.fillText(line, x, y);
+        y += lineHeight;
+    });
+
+    downloadBtn.style.display="inline-block";
+}
+
+function downloadWallpaper(){
+    const link=document.createElement("a");
+    link.download="minimal-aesthetic-wallpaper.png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+}
+</script>
+
+  <footer align="center">Created by Ridhim Mehta</footer>
+</body>
+</html>

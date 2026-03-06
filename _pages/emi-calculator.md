@@ -1,7 +1,7 @@
 ---
 layout: page
 title: EMI Calculator 
-permalink: /emi-calculator
+permalink: /emi-calculator-101
 comments: false
 imageshadow: true
 ---

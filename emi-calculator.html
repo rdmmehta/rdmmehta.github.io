@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Advanced EMI Calculator with Step-Up EMI & Lump Sum Payment</title>
+
+<meta name="description" content="Free advanced EMI calculator with step-up EMI increase and yearly lump sum payments. Calculate EMI, total interest, amortization schedule and loan payoff instantly.">
+
+<meta name="keywords" content="emi calculator, loan emi calculator, step up emi calculator, amortization calculator, loan calculator india">
+
+<meta name="robots" content="index, follow">
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "Advanced EMI Calculator",
+ "applicationCategory": "FinanceApplication",
+ "operatingSystem": "Any",
+ "description": "Advanced EMI calculator with step-up EMI increase and yearly lump sum payments."
+}
+</script>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial;
+margin:0;
+background:#f5f7fb;
+color:#333;
+}
+
+/* HEADER */
+
+.site-header{
+background:white;
+border-bottom:1px solid #eee;
+}
+
+.nav-container{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 20px;
+}
+
+.logo h2{
+margin:0;
+color:#1a73e8;
+}
+
+.nav-menu{
+display:flex;
+gap:25px;
+}
+
+.nav-menu a{
+text-decoration:none;
+color:#333;
+font-weight:500;
+}
+
+.nav-menu a:hover{
+color:#1a73e8;
+}
+
+/* MAIN */
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+header.main-title{
+text-align:center;
+margin-bottom:25px;
+}
+
+header.main-title h1{
+color:#1a73e8;
+margin-bottom:5px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+margin-bottom:25px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+label{
+font-weight:600;
+font-size:14px;
+}
+
+input{
+padding:12px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:15px;
+width:100%;
+}
+
+button{
+background:#1a73e8;
+color:white;
+border:none;
+padding:14px;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+margin-top:15px;
+width:100%;
+}
+
+button:hover{
+background:#0f5ed7;
+}
+
+.results{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.result-box{
+background:#f0f4ff;
+padding:18px;
+border-radius:8px;
+text-align:center;
+}
+
+.result-box h3{
+margin:0;
+color:#1a73e8;
+font-size:22px;
+}
+
+.table-container{
+overflow-x:auto;
+margin-top:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #ddd;
+text-align:center;
+font-size:14px;
+}
+
+th{
+background:#1a73e8;
+color:white;
+}
+
+.lump{
+background:#e8f5e9;
+font-weight:bold;
+}
+
+footer{
+text-align:center;
+margin-top:30px;
+color:#888;
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+.nav-container{
+flex-direction:column;
+gap:10px;
+}
+
+.nav-menu{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<header class="site-header">
+
+<div class="nav-container">
+
+<div class="logo">
+<h2><a href="https://ridh.im/assets/images/ridhim-mehta.png"></h2>
+</div>
+
+<nav class="nav-menu">
+
+<a href="www.ridh.im">Home</a>
+<a href="#">About</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<header class="main-title">
+
+<h1>Advanced EMI Calculator</h1>
+
+<p>Calculate EMI with Step-Up Payments and Lump Sum Prepayments</p>
+
+</header>
+
+
+<div class="card">
+
+<div class="form-grid">
+
+<div>
+<label>Loan Amount</label>
+<input type="number" id="loan">
+</div>
+
+<div>
+<label>Rate of Interest (%)</label>
+<input type="number" id="rate">
+</div>
+
+<div>
+<label>Tenure (Years)</label>
+<input type="number" id="tenure">
+</div>
+
+<div>
+<label>Every Year EMI Increase (₹)</label>
+<input type="number" id="increase" value="0">
+</div>
+
+<div>
+<label>Every Year Lump Sum Payment (₹)</label>
+<input type="number" id="lumpsum" value="0">
+</div>
+
+</div>
+
+<button onclick="calculateEMI()">Calculate EMI</button>
+
+<div class="results">
+
+<div class="result-box">
+<h3 id="emi">0</h3>
+<p>Base EMI</p>
+</div>
+
+<div class="result-box">
+<h3 id="interest">0</h3>
+<p>Total Interest</p>
+</div>
+
+<div class="result-box">
+<h3 id="total">0</h3>
+<p>Total Amount Paid</p>
+</div>
+
+<div class="result-box">
+<h3 id="payoff">0</h3>
+<p>Loan Fully Paid In</p>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Amortization Schedule</h2>
+
+<div class="table-container">
+
+<table id="schedule">
+
+<thead>
+<tr>
+<th>Month</th>
+<th>EMI</th>
+<th>Interest</th>
+<th>Principal</th>
+<th>Balance</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>What is an EMI Calculator?</h2>
+
+<p>
+An EMI calculator helps borrowers calculate the monthly installment required to repay a loan. 
+It considers the loan amount, interest rate and tenure to determine the fixed monthly payment.
+</p>
+
+<h2>Benefits of Step-Up EMI</h2>
+
+<p>
+Step-up EMI allows borrowers to increase their EMI gradually every year. This is useful for 
+individuals whose income is expected to increase over time. Increasing EMI helps reduce the 
+total interest paid and closes the loan faster.
+</p>
+
+<h2>How Lump Sum Payments Reduce Loan Tenure</h2>
+
+<p>
+Making periodic lump sum payments directly reduces the loan principal. Since interest is 
+calculated on the outstanding principal, reducing the balance early can significantly lower 
+total interest and shorten the loan duration.
+</p>
+
+</div>
+
+<footer>
+
+Created by <a href="www.ridh.im">Ridhim Mehta</a>
+
+</footer>
+
+</div>
+
+
+<script>
+
+function calculateEMI(){
+
+let loan=parseFloat(document.getElementById("loan").value)
+
+let rate=parseFloat(document.getElementById("rate").value)/100/12
+
+let years=parseInt(document.getElementById("tenure").value)
+
+let increase=parseFloat(document.getElementById("increase").value)||0
+
+let lumpsum=parseFloat(document.getElementById("lumpsum").value)||0
+
+let months=years*12
+
+let emi=loan*rate*Math.pow(1+rate,months)/(Math.pow(1+rate,months)-1)
+
+document.getElementById("emi").innerHTML="₹"+emi.toFixed(0)
+
+let balance=loan
+let totalInterest=0
+let totalPayment=0
+
+let tbody=document.querySelector("#schedule tbody")
+tbody.innerHTML=""
+
+let currentEMI=emi
+let monthCounter=0
+
+for(let m=1;m<=months;m++){
+
+monthCounter++
+
+let interest=balance*rate
+
+let principal=currentEMI-interest
+
+balance-=principal
+
+if(balance<0) balance=0
+
+totalInterest+=interest
+totalPayment+=currentEMI
+
+let row=`
+<tr>
+<td>${m}</td>
+<td>${currentEMI.toFixed(0)}</td>
+<td>${interest.toFixed(0)}</td>
+<td>${principal.toFixed(0)}</td>
+<td>${balance.toFixed(0)}</td>
+</tr>
+`
+
+tbody.innerHTML+=row
+
+if(m%12==0){
+
+if(lumpsum>0){
+
+balance-=lumpsum
+
+if(balance<0) balance=0
+
+let lumpRow=`
+<tr class="lump">
+<td>${m} (Lump Sum)</td>
+<td>${lumpsum.toFixed(0)}</td>
+<td>0</td>
+<td>${lumpsum.toFixed(0)}</td>
+<td>${balance.toFixed(0)}</td>
+</tr>
+`
+
+tbody.innerHTML+=lumpRow
+
+totalPayment+=lumpsum
+
+}
+
+currentEMI=currentEMI+increase
+
+}
+
+if(balance<=0) break
+
+}
+
+let payoffYears=Math.floor(monthCounter/12)
+let payoffMonths=monthCounter%12
+
+document.getElementById("payoff").innerHTML=
+payoffYears+" Years "+payoffMonths+" Months"
+
+document.getElementById("interest").innerHTML="₹"+totalInterest.toFixed(0)
+document.getElementById("total").innerHTML="₹"+totalPayment.toFixed(0)
+
+}
+
+</script>
+
+</body>
+
+</html>
